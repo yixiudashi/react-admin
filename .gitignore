@@ -27,3 +27,4 @@ node_modules/fbjs/
 node_modules/react-dom/
 node_modules/.bin/
 node_modules/.bin/gulp
+build/
