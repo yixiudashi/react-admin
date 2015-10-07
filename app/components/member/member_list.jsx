@@ -121,8 +121,11 @@ export default React.createClass({
 				      	<TableRowColumn>{member[3]}</TableRowColumn>
 				      	<TableRowColumn>{member[6]}</TableRowColumn>
 				      	<TableRowColumn tooltip=''><TextField hintText="Hint Text" /></TableRowColumn>
-				      	<TableRowColumn tooltip=''>
-				      		<Button bsStyle="link" onClick={this.show_detail}>Link</Button>
+				      	<TableRowColumn style={{'width':'120px'}}>
+				      		<Button 
+				      		bsStyle="link" 
+				      		onClick={this.show_detail}
+				      		style={{'font-size':'12px'}}>查看详情/编辑</Button>
 				      	</TableRowColumn>
 				    </TableRow>
 				);
