@@ -41,14 +41,13 @@ export default React.createClass({
 				});
 			}.bind(this));
 	},
-	hand_select: function(){
-		console.log(this.refs.table.state.selectedRows)
-	},
 	hand_click_cell:function(rowNumber, columnId){
-		this.setState({
-			who_detail:this.state.data_body[rowNumber]
-		});
-		return
+		console.log(columnId)
+		if(columnId==6){
+			this.setState({
+				who_detail:this.state.data_body[rowNumber]
+			})
+		}
 	},
 	show_detail:function(rowNumber){
 		this.refs.member_detail.show();
@@ -112,20 +111,16 @@ export default React.createClass({
 		var data_head = this.state.data_head;
 		var tablerows =  data_body.map(function(member) {
 			return (
-					<TableRow>
+					<TableRow displayBorder={false}>
 				      	<TableRowColumn>{member[0]}</TableRowColumn>
 				      	<TableRowColumn>{member[1]}</TableRowColumn>
 				      	<TableRowColumn>{member[2]}</TableRowColumn>
 				      	<TableRowColumn>{member[5]}</TableRowColumn>
-				      	<TableRowColumn>{member[4]}</TableRowColumn>
-				      	<TableRowColumn>{member[3]}</TableRowColumn>
-				      	<TableRowColumn>{member[6]}</TableRowColumn>
-				      	<TableRowColumn tooltip=''><TextField hintText="Hint Text" /></TableRowColumn>
-				      	<TableRowColumn style={{'width':'120px'}}>
+				      	<TableRowColumn>
 				      		<Button 
 				      		bsStyle="link" 
 				      		onClick={this.show_detail}
-				      		style={{'font-size':'12px'}}>查看详情/编辑</Button>
+				      		style={{'fontSize':'12px'}}>查看详情/编辑</Button>
 				      	</TableRowColumn>
 				    </TableRow>
 				);
@@ -141,20 +136,16 @@ export default React.createClass({
 				  onRowSelection={this._onRowSelection}>
 				  <TableHeader enableSelectAll={true}>
 				    <TableRow>
-				      <TableHeaderColumn colSpan="9" style={{textAlign: 'center'}}>
-				        <h3 style={{'font-weight':'bold'}}>会员列表</h3>
+				      <TableHeaderColumn colSpan="6" style={{textAlign: 'center'}}>
+				        <h3 style={{'fontWeight':'bold'}}>会员列表</h3>
 				      </TableHeaderColumn>
 				    </TableRow>
-				    <TableRow>
-				      <TableHeaderColumn tooltip=''>{data_head[0]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>{data_head[1]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>{data_head[2]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>{data_head[5]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>{data_head[4]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>{data_head[3]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>{data_head[6]}</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>输入</TableHeaderColumn>
-				      <TableHeaderColumn tooltip=''>按钮</TableHeaderColumn>
+				    <TableRow displayBorder={false}>
+				      <TableHeaderColumn>{data_head[0]}</TableHeaderColumn>
+				      <TableHeaderColumn>{data_head[1]}</TableHeaderColumn>
+				      <TableHeaderColumn>{data_head[2]}</TableHeaderColumn>
+				      <TableHeaderColumn>{data_head[5]}</TableHeaderColumn>
+				      <TableHeaderColumn>操作</TableHeaderColumn>
 				    </TableRow>
 				  </TableHeader>
 				  <TableBody
@@ -172,7 +163,7 @@ export default React.createClass({
 			            	<span style={{'color':'#ff4081'}}>
 				            	{this.state.who_detail[1] +" "}
 			            	</span>
-			            	<span style={{'font-size':'15px'}}>
+			            	<span style={{'fontSize':'15px'}}>
 				            	会员详情
 			            	</span> 
 		            	</h3>
