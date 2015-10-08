@@ -15,7 +15,6 @@ InjectTapEventPlugin();
 
 import Meaus from './components/menu/index.jsx';
 import Member from './components/member/member.jsx';
-import Table from './components/member/table_ex.jsx';
 
 
 var Welcome = React.createClass({
@@ -23,7 +22,6 @@ var Welcome = React.createClass({
 		muiTheme: React.PropTypes.object
 	},
 	getChildContext: function() {
-		console.log('setting context!!');
 		return {
 			muiTheme: ThemeManager.getCurrentTheme()
 		};

@@ -1,5 +1,6 @@
 let React = require('react/addons');
 let request = require('superagent');
+let MemberDetail = require('./member_detail.jsx');
 let {
 	Table,
 	TableHeader,
@@ -21,12 +22,13 @@ export default React.createClass({
 	getInitialState: function() {
 		return {
 			data_head:[],
-			data_body: [],
+			data_body: [[]],
 			selectRows: [],
 			detail_state: false,
-			who_detail: {},
+			who_detail: 0,
 			detail_button_no: '关闭',
 			detail_button_yes: '编辑',
+
 		};
 	},
 	componentDidMount: function() {
@@ -42,10 +44,9 @@ export default React.createClass({
 			}.bind(this));
 	},
 	hand_click_cell:function(rowNumber, columnId){
-		console.log(columnId)
-		if(columnId==6){
+		if(columnId==5){
 			this.setState({
-				who_detail:this.state.data_body[rowNumber]
+				who_detail: rowNumber
 			})
 		}
 	},
@@ -78,6 +79,15 @@ export default React.createClass({
 		this.refs.confirm_alter.dismiss();
 	},
 	confirm_button_yes:function(){
+		var data_body =this.state.data_body;
+		var new_data_obj = this.refs.member_detail_form.state;
+		var new_detail = this.state.data_head.map(function(head,index) {
+			return new_data_obj['data_'+index]
+		});
+		data_body.splice(this.state.who_detail,1,new_detail);
+		this.setState({
+			data_body: data_body
+		});
 		this.refs.confirm_alter.dismiss();
 		this.refs.member_detail.dismiss();
 		this.refs.tip_result.show();
@@ -111,7 +121,7 @@ export default React.createClass({
 		var data_head = this.state.data_head;
 		var tablerows =  data_body.map(function(member) {
 			return (
-					<TableRow displayBorder={false}>
+					<TableRow displayBorder={false} key={member[0]}>
 				      	<TableRowColumn>{member[0]}</TableRowColumn>
 				      	<TableRowColumn>{member[1]}</TableRowColumn>
 				      	<TableRowColumn>{member[2]}</TableRowColumn>
@@ -136,7 +146,7 @@ export default React.createClass({
 				  onRowSelection={this._onRowSelection}>
 				  <TableHeader enableSelectAll={true}>
 				    <TableRow>
-				      <TableHeaderColumn colSpan="6" style={{textAlign: 'center'}}>
+				      <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
 				        <h3 style={{'fontWeight':'bold'}}>会员列表</h3>
 				      </TableHeaderColumn>
 				    </TableRow>
@@ -159,9 +169,9 @@ export default React.createClass({
 				<Dialog
 		            ref="member_detail"
 		            title={
-		            	<h3 style={{'padding-top':'20px'}}>
+		            	<h3 style={{'paddingTop':'20px'}}>
 			            	<span style={{'color':'#ff4081'}}>
-				            	{this.state.who_detail[1] +" "}
+				            	{this.state.data_body[this.state.who_detail][1] +" "}
 			            	</span>
 			            	<span style={{'fontSize':'15px'}}>
 				            	会员详情
@@ -172,9 +182,11 @@ export default React.createClass({
 		            modal={this.state.detail_state}
 		            autoDetectWindowHeight={true}
 		            autoScrollBodyContent={true}>
-		            <div style={{height: '1000px'}}>
-		              Really long content
-		            </div>
+					<MemberDetail 
+						ref='member_detail_form'
+						data={this.state.data_body[this.state.who_detail]} 
+						data_head={this.state.data_head} 
+						detail_state={this.state.detail_state} />		              
 		        </Dialog>
 		        <Dialog
 		        	contentStyle={{'width':'500px'}}
@@ -189,7 +201,7 @@ export default React.createClass({
 		        	bodyStyle={{'height':'0px','padding':'0'}}
 		            ref="tip_result"
 		            modal={false}>
-		            <p style={{'padding-top':'10px','color':'#00bcd4'}}>修改成功</p>
+		            <p style={{'paddingTop':'10px','color':'#00bcd4'}}>修改成功</p>
 		        </Dialog>
 			</div>
 
