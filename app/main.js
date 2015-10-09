@@ -1,4 +1,6 @@
 import React from 'react/addons';
+import $ from 'jquery';
+import 'noty';
 import './main.scss'
 import ReactRouter from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +13,6 @@ var Link = ReactRouter.Link;
 var StateMixin = ReactRouter.State;
 
 InjectTapEventPlugin();
-
 
 import Meaus from './components/menu/index.jsx';
 import Member from './components/member/member.jsx';

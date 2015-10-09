@@ -49,6 +49,12 @@ export default React.createClass({
 				who_detail: rowNumber
 			})
 		}
+		var n = noty({
+			text: Date(),
+			layout: 'topRight',
+			theme: 'defaultTheme',
+			type: 'warning'
+		});
 	},
 	show_detail:function(rowNumber){
 		this.refs.member_detail.show();
@@ -141,10 +147,12 @@ export default React.createClass({
 				  onCellClick={this.hand_click_cell}
 				  ref='table'
 				  fixedHeader={true}
-				  selectable={true}
+				  selectable={false}
 				  multiSelectable={true}
 				  onRowSelection={this._onRowSelection}>
-				  <TableHeader enableSelectAll={true}>
+				  <TableHeader 
+					displaySelectAll={false}
+				    enableSelectAll={true}>
 				    <TableRow>
 				      <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
 				        <h3 style={{'fontWeight':'bold'}}>会员列表</h3>
@@ -160,6 +168,7 @@ export default React.createClass({
 				  </TableHeader>
 				  <TableBody
 				  	ref='tablebody'
+				  	displayRowCheckbox={false}
 				    deselectOnClickaway={false}
 				    showRowHover={true}
 				    stripedRows={true}>
